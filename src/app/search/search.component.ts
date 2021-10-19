@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -8,7 +9,7 @@ import { DataService } from '../services/data.service';
 })
 export class SearchComponent implements OnInit {
   data: any;
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private router: Router) { }
 
   ngOnInit(): void { }
 
@@ -18,6 +19,17 @@ export class SearchComponent implements OnInit {
         .then(response => {
           this.data = response;
        });
+  }
+
+
+  getDetailPage(result:any) {
+    console.log(result);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        result: JSON.stringify(result)
+      }
+    };
+    this.router.navigate(['search-detail'], navigationExtras);
   }
 
 }
